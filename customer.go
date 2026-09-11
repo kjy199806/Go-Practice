@@ -1,17 +1,17 @@
 package main
 
 type Address struct {
-	street      string
-	city        string
-	state       string
-	postal_code string
-	country     string
+	Street     string `json:"street"`
+	City       string `json:"city"`
+	State      string `json:"state"`
+	PostalCode string `json:"postal_code"`
+	Country    string `json:"country"`
 }
 
-type user struct {
-	id         int
-	first_name string
-	last_name  string
-	email      string
-	Address
+type User struct {
+	ID        int     `json:"id"`
+	FirstName string  `json:"first_name"`
+	LastName  string  `json:"last_name"`
+	Email     string  `json:"email"`
+	Address   Address `json:"address"`
 }

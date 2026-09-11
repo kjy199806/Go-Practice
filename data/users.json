@@ -1,0 +1,262 @@
+[
+  {
+    "id": 1,
+    "first_name": "James",
+    "last_name": "Smith",
+    "email": "james.smith@example.com",
+    "address": {
+      "street": "104 Maple Street",
+      "city": "Seattle",
+      "state": "WA",
+      "postal_code": "98101",
+      "country": "USA"
+    }
+  },
+  {
+    "id": 2,
+    "first_name": "Maria",
+    "last_name": "Garcia",
+    "email": "maria.garcia@example.com",
+    "address": {
+      "street": "742 Evergreen Terrace",
+      "city": "Springfield",
+      "state": "IL",
+      "postal_code": "62704",
+      "country": "USA"
+    }
+  },
+  {
+    "id": 3,
+    "first_name": "Robert",
+    "last_name": "Johnson",
+    "email": "robert.johnson@example.com",
+    "address": {
+      "street": "123 Elm Street",
+      "city": "Austin",
+      "state": "TX",
+      "postal_code": "78701",
+      "country": "USA"
+    }
+  },
+  {
+    "id": 4,
+    "first_name": "Elena",
+    "last_name": "Rostova",
+    "email": "elena.rostova@example.com",
+    "address": {
+      "street": "45 Park Avenue",
+      "city": "New York",
+      "state": "NY",
+      "postal_code": "10016",
+      "country": "USA"
+    }
+  },
+  {
+    "id": 5,
+    "first_name": "David",
+    "last_name": "Lee",
+    "email": "david.lee@example.com",
+    "address": {
+      "street": "888 Market Street",
+      "city": "San Francisco",
+      "state": "CA",
+      "postal_code": "94102",
+      "country": "USA"
+    }
+  },
+  {
+    "id": 6,
+    "first_name": "Aisha",
+    "last_name": "Khan",
+    "email": "aisha.khan@example.com",
+    "address": {
+      "street": "52 Peachtree Road",
+      "city": "Atlanta",
+      "state": "GA",
+      "postal_code": "30303",
+      "country": "USA"
+    }
+  },
+  {
+    "id": 7,
+    "first_name": "Michael",
+    "last_name": "Brown",
+    "email": "michael.brown@example.com",
+    "address": {
+      "street": "300 Ocean Drive",
+      "city": "Miami",
+      "state": "FL",
+      "postal_code": "33139",
+      "country": "USA"
+    }
+  },
+  {
+    "id": 8,
+    "first_name": "Sarah",
+    "last_name": "Wilson",
+    "email": "sarah.wilson@example.com",
+    "address": {
+      "street": "15 Pine Lane",
+      "city": "Denver",
+      "state": "CO",
+      "postal_code": "80202",
+      "country": "USA"
+    }
+  },
+  {
+    "id": 9,
+    "first_name": "Kenji",
+    "last_name": "Takahashi",
+    "email": "kenji.takahashi@example.com",
+    "address": {
+      "street": "901 1st Avenue",
+      "city": "Seattle",
+      "state": "WA",
+      "postal_code": "98104",
+      "country": "USA"
+    }
+  },
+  {
+    "id": 10,
+    "first_name": "Chloe",
+    "last_name": "Dubois",
+    "email": "chloe.dubois@example.com",
+    "address": {
+      "street": "600 Michigan Avenue",
+      "city": "Chicago",
+      "state": "IL",
+      "postal_code": "60611",
+      "country": "USA"
+    }
+  },
+  {
+    "id": 11,
+    "first_name": "Carlos",
+    "last_name": "Mendoza",
+    "email": "carlos.mendoza@example.com",
+    "address": {
+      "street": "1200 Grand Avenue",
+      "city": "Phoenix",
+      "state": "AZ",
+      "postal_code": "85007",
+      "country": "USA"
+    }
+  },
+  {
+    "id": 12,
+    "first_name": "Emily",
+    "last_name": "Davis",
+    "email": "emily.davis@example.com",
+    "address": {
+      "street": "404 Broadway",
+      "city": "Boston",
+      "state": "MA",
+      "postal_code": "02116",
+      "country": "USA"
+    }
+  },
+  {
+    "id": 13,
+    "first_name": "Liam",
+    "last_name": "O'Connor",
+    "email": "liam.oconnor@example.com",
+    "address": {
+      "street": "77 Sunset Boulevard",
+      "city": "Los Angeles",
+      "state": "CA",
+      "postal_code": "90028",
+      "country": "USA"
+    }
+  },
+  {
+    "id": 14,
+    "first_name": "Fatima",
+    "last_name": "Al-Mansoor",
+    "email": "fatima.almansoor@example.com",
+    "address": {
+      "street": "500 Main Street",
+      "city": "Dallas",
+      "state": "TX",
+      "postal_code": "75201",
+      "country": "USA"
+    }
+  },
+  {
+    "id": 15,
+    "first_name": "Benjamin",
+    "last_name": "Taylor",
+    "email": "benjamin.taylor@example.com",
+    "address": {
+      "street": "210 5th Avenue",
+      "city": "Portland",
+      "state": "OR",
+      "postal_code": "97204",
+      "country": "USA"
+    }
+  },
+  {
+    "id": 16,
+    "first_name": "Sophia",
+    "last_name": "Martins",
+    "email": "sophia.martins@example.com",
+    "address": {
+      "street": "88 Chestnut Street",
+      "city": "Philadelphia",
+      "state": "PA",
+      "postal_code": "19106",
+      "country": "USA"
+    }
+  },
+  {
+    "id": 17,
+    "first_name": "Kwame",
+    "last_name": "Mensah",
+    "email": "kwame.mensah@example.com",
+    "address": {
+      "street": "1401 K Street NW",
+      "city": "Washington",
+      "state": "DC",
+      "postal_code": "20005",
+      "country": "USA"
+    }
+  },
+  {
+    "id": 18,
+    "first_name": "Hannah",
+    "last_name": "Schmidt",
+    "email": "hannah.schmidt@example.com",
+    "address": {
+      "street": "333 Nicollet Mall",
+      "city": "Minneapolis",
+      "state": "MN",
+      "postal_code": "55401",
+      "country": "USA"
+    }
+  },
+  {
+    "id": 19,
+    "first_name": "Lucas",
+    "last_name": "Silva",
+    "email": "lucas.silva@example.com",
+    "address": {
+      "street": "950 Las Olas Blvd",
+      "city": "Fort Lauderdale",
+      "state": "FL",
+      "postal_code": "33301",
+      "country": "USA"
+    }
+  },
+  {
+    "id": 20,
+    "first_name": "Priya",
+    "last_name": "Patel",
+    "email": "priya.patel@example.com",
+    "address": {
+      "street": "101 Executive Parkway",
+      "city": "San Jose",
+      "state": "CA",
+      "postal_code": "95110",
+      "country": "USA"
+    }
+  }
+]

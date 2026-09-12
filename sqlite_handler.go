@@ -3,10 +3,11 @@ package main
 import (
 	"database/sql"
 	"fmt"
+	"practice/models"
 )
 
 // GetAllUsers retrieves all users from SQLite
-func GetAllUsers(db *sql.DB) ([]User, error) {
+func GetAllUsers(db *sql.DB) ([]models.User, error) {
 	rows, err := db.Query(`
 		SELECT ID, FirstName, LastName, Email, 
 			   Street, City, State, PostalCode, Country 
@@ -17,9 +18,9 @@ func GetAllUsers(db *sql.DB) ([]User, error) {
 	}
 	defer rows.Close()
 
-	users := []User{}
+	users := []models.User{}
 	for rows.Next() {
-		var u User
+		var u models.User
 		err := rows.Scan(
 			&u.ID, &u.FirstName, &u.LastName, &u.Email,
 			&u.Address.Street, &u.Address.City, &u.Address.State, &u.Address.PostalCode, &u.Address.Country,
@@ -38,8 +39,8 @@ func GetAllUsers(db *sql.DB) ([]User, error) {
 }
 
 // GetUserByID retrieves a single user by ID from SQLite
-func GetUserByID(db *sql.DB, id int) (*User, error) {
-	var u User
+func GetUserByID(db *sql.DB, id int) (*models.User, error) {
+	var u models.User
 	err := db.QueryRow(`
 		SELECT ID, FirstName, LastName, Email, Street, City, State, PostalCode, Country 
 		FROM users WHERE ID = ?
@@ -56,10 +57,10 @@ func GetUserByID(db *sql.DB, id int) (*User, error) {
 }
 
 // GetUserByEmail retrieves a single user by matched email from SQLite
-func GetUserByEmail(db *sql.DB, email string) (*User, error) {
+func GetUserByEmail(db *sql.DB, email string) (*models.User, error) {
 
 	// Fetch user by email from database
-	var u User
+	var u models.User
 	err := db.QueryRow(`
 		SELECT ID, FirstName, LastName, Email, 
 				Street, City, State, PostalCode, Country 

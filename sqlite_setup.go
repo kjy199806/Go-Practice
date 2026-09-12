@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"log"
 	"os"
+	"practice/models"
 	"time"
 
 	_ "modernc.org/sqlite"
@@ -83,7 +84,7 @@ func seedUsersIfEmpty(db *sql.DB) error {
 		return fmt.Errorf("unable to read seed JSON file: %w", err)
 	}
 
-	var users []User
+	var users []models.User
 	if err := json.Unmarshal(data, &users); err != nil {
 		return fmt.Errorf("unable to parse seed JSON file: %w", err)
 	}
@@ -135,7 +136,7 @@ func printData(db *sql.DB) {
 
 	// Fetch and print the all user in for loop
 	for i := 0; i < count; i++ {
-		var u User
+		var u models.User
 
 		// Pass (i + 1) to match SQLite's 1-based IDs (1, 2, 3...)
 		targetID := i + 1

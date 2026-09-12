@@ -4,12 +4,13 @@ import (
 	"database/sql"
 	"encoding/json"
 	"net/http"
+	"practice/models"
 )
 
 // POST /login
 func LoginHandler(db *sql.DB) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		var req LoginRequest
+		var req models.LoginRequest
 		if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
 			respondWithError(w, http.StatusBadRequest, "Invalid request body")
 			return
@@ -28,7 +29,7 @@ func LoginHandler(db *sql.DB) http.HandlerFunc {
 		}
 
 		// Return data
-		respondWithJSON(w, http.StatusOK, LoginResponse{
+		respondWithJSON(w, http.StatusOK, models.LoginResponse{
 			Token: "xsrf-token",
 			User:  *u,
 		})

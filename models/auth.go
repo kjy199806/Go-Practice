@@ -1,4 +1,4 @@
-package main
+package models
 
 type LoginRequest struct {
 	Email    string `json:"email"`

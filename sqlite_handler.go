@@ -54,3 +54,24 @@ func GetUserByID(db *sql.DB, id int) (*User, error) {
 
 	return &u, nil
 }
+
+// GetUserByEmail retrieves a single user by matched email from SQLite
+func GetUserByEmail(db *sql.DB, email string) (*User, error) {
+
+	// Fetch user by email from database
+	var u User
+	err := db.QueryRow(`
+		SELECT ID, FirstName, LastName, Email, 
+				Street, City, State, PostalCode, Country 
+		FROM users WHERE Email = ?
+	`, email).Scan(
+		&u.ID, &u.FirstName, &u.LastName, &u.Email,
+		&u.Address.Street, &u.Address.City, &u.Address.State, &u.Address.PostalCode, &u.Address.Country,
+	)
+
+	if err != nil {
+		return nil, err // Returns sql.ErrNoRows if not found
+	}
+
+	return &u, nil
+}

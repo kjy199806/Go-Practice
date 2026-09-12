@@ -13,10 +13,13 @@ func main() {
 	}
 	defer db.Close() // Ensures the database connection closes when main exits
 
-	printData(db)
+	// printData(db)
 
 	// 2. Set up HTTP Router
 	mux := http.NewServeMux()
+
+	// Public Auth Route
+	mux.HandleFunc("POST /login", LoginHandler(db))
 
 	// Register Routes
 	mux.HandleFunc("GET /users", GetUsersHandler(db))

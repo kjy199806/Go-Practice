@@ -3,9 +3,15 @@ package main
 import (
 	"database/sql"
 	"encoding/json"
+	"fmt"
 	"net/http"
 	"practice/models"
+	"time"
+
+	"github.com/golang-jwt/jwt/v5"
 )
+
+var jwtSecretKey = []byte("super-secret-secret-key-12345")
 
 // POST /login
 func LoginHandler(db *sql.DB) http.HandlerFunc {
@@ -28,10 +34,61 @@ func LoginHandler(db *sql.DB) http.HandlerFunc {
 			return
 		}
 
-		// Return data
-		respondWithJSON(w, http.StatusOK, models.LoginResponse{
-			Token: "xsrf-token",
-			User:  *u,
+		// Generate secure JWT token
+		token, err := GenerateJWT(u)
+		if err != nil {
+			respondWithError(w, http.StatusInternalServerError, "Token creation failed")
+			return
+		}
+
+		// Set JWT as an HttpOnly, Secure cookie
+		http.SetCookie(w, &http.Cookie{
+			Name:     "auth_token",
+			Value:    token,
+			Path:     "/",
+			Expires:  time.Now().Add(24 * time.Hour),
+			HttpOnly: true,
+			SameSite: http.SameSiteLaxMode,
 		})
+		// Set XSRF token in cookie
+		respondWithJSON(w, http.StatusOK, u)
 	}
+}
+
+// GenerateJWT creates a signed token string containing the user's ID and Email
+func GenerateJWT(user *models.User) (string, error) {
+	// Set token to expire in 1 hour
+	expirationTime := time.Now().Add(60 * time.Minute)
+
+	claims := &models.Claims{
+		UserID: user.ID,
+		Email:  user.Email,
+		RegisteredClaims: jwt.RegisteredClaims{
+			ExpiresAt: jwt.NewNumericDate(expirationTime),
+			IssuedAt:  jwt.NewNumericDate(time.Now()),
+		},
+	}
+
+	// Declare token with HMAC-SHA256 signing algorithm
+	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
+
+	// Create complete signed JWT string using secret key
+	tokenString, err := token.SignedString(jwtSecretKey)
+	if err != nil {
+		return "", fmt.Errorf("failed to sign token: %w", err)
+	}
+
+	return tokenString, nil
+}
+
+func LogoutHandler(w http.ResponseWriter, r *http.Request) {
+	http.SetCookie(w, &http.Cookie{
+		Name:     "auth_token",
+		Value:    "",
+		Path:     "/",
+		MaxAge:   -1,
+		HttpOnly: true,
+	})
+
+	respondWithJSON(w, http.StatusOK, map[string]string{"message": "Successfully logged out"})
 }

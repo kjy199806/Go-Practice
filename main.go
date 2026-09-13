@@ -22,8 +22,10 @@ func main() {
 	mux.HandleFunc("POST /login", LoginHandler(db))
 
 	// Register Routes
-	mux.HandleFunc("GET /users", GetUsersHandler(db))
-	mux.HandleFunc("GET /users/{id}", GetUserByIDHandler(db))
+	mux.HandleFunc("GET /users", RequireAuth(GetUsersHandler(db)))
+	mux.HandleFunc("GET /users/{id}", RequireAuth(GetUserByIDHandler(db)))
+
+	mux.HandleFunc("POST /logout", LogoutHandler)
 
 	// 3. Start Server
 	log.Println("Server is running on http://localhost:8080")

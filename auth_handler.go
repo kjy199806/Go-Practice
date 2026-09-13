@@ -45,7 +45,7 @@ func LoginHandler(db *sql.DB, cfg *config.Config) http.HandlerFunc {
 			Name:     "auth_token",
 			Value:    token,
 			Path:     "/",
-			Expires:  time.Now().Add(24 * time.Hour),
+			Expires:  time.Now().Add(60 * time.Minute),
 			HttpOnly: true,
 			SameSite: http.SameSiteLaxMode,
 		})

@@ -9,7 +9,6 @@ type Config struct {
 	Port      string
 }
 
-// LoadConfig reads variables from environment or falls back to defaults
 func LoadConfig() *Config {
 	jwtSecret := "my_super_secret_key"
 

@@ -4,7 +4,7 @@ import (
 	"database/sql"
 	"encoding/json"
 	"fmt"
-	"log"
+	"log/slog"
 	"os"
 	"practice/models"
 	"time"
@@ -38,7 +38,7 @@ func InitDB(dbPath string) (*sql.DB, error) {
 
 	// 5. Seed initial users data if database is empty
 	if err := seedUsersIfEmpty(db); err != nil {
-		log.Printf("Warning: Seeding initial JSON data failed: %v", err)
+		slog.Warn("seeding initial JSON data failed", "err", err)
 	}
 
 	return db, nil
@@ -76,7 +76,7 @@ func seedUsersIfEmpty(db *sql.DB) error {
 		return nil
 	}
 
-	log.Println("Database is empty. Seeding initial records from data/users.json...")
+	slog.Info("database is empty; seeding initial records", "source", "data/users.json")
 
 	// Read JSON seed file
 	data, err := os.ReadFile("data/users.json")
@@ -120,7 +120,7 @@ func seedUsersIfEmpty(db *sql.DB) error {
 		return fmt.Errorf("failed to commit transaction: %w", err)
 	}
 
-	log.Println("Database successfully seeded!")
+	slog.Info("database successfully seeded")
 	return nil
 }
 
@@ -130,9 +130,10 @@ func printData(db *sql.DB) {
 	var count int
 	err := db.QueryRow("SELECT COUNT(*) FROM users").Scan(&count)
 	if err != nil {
-		log.Fatalf("Failed to query user count: %v", err)
+		slog.Error("failed to query user count", "err", err)
+		return
 	}
-	fmt.Printf("Successfully connected! Total users in DB: %d\n", count)
+	slog.Info("successfully connected", "user_count", count)
 
 	// Fetch and print the all user in for loop
 	for i := 0; i < count; i++ {
@@ -150,11 +151,11 @@ func printData(db *sql.DB) {
 			&u.Address.Street, &u.Address.City, &u.Address.State, &u.Address.PostalCode, &u.Address.Country,
 		)
 		if err != nil {
-			log.Fatalf("Failed to query user ID %d: %v", targetID, err)
+			slog.Error("failed to query user", "user_id", targetID, "err", err)
+			return
 		}
-		fmt.Printf("%d User in DB: ID=%d, Name=%s %s, Email=%s, City=%s\n",
-			i, u.ID, u.FirstName, u.LastName, u.Email, u.Address.City)
+		slog.Info("user loaded", "index", i, "user_id", u.ID, "name", u.FirstName+" "+u.LastName, "email", u.Email, "city", u.Address.City)
 	}
 
-	log.Println("Database test passed!")
+	slog.Info("database test passed")
 }

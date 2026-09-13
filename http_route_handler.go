@@ -4,7 +4,7 @@ import (
 	"database/sql"
 	"encoding/json"
 	"errors"
-	"log"
+	"log/slog"
 	"net/http"
 	"strconv"
 )
@@ -24,7 +24,7 @@ func GetUsersHandler(db *sql.DB) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		users, err := GetAllUsers(db)
 		if err != nil {
-			log.Printf("Error getting users: %v", err)
+			slog.Error("failed to get users", "err", err)
 			respondWithError(w, http.StatusInternalServerError, "Failed to retrieve users")
 			return
 		}
@@ -49,7 +49,7 @@ func GetUserByIDHandler(db *sql.DB) http.HandlerFunc {
 				respondWithError(w, http.StatusNotFound, "User not found")
 				return
 			}
-			log.Printf("Error getting user %d: %v", id, err)
+			slog.Error("failed to get user", "user_id", id, "err", err)
 			respondWithError(w, http.StatusInternalServerError, "Failed to retrieve user")
 			return
 		}

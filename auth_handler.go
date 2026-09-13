@@ -5,16 +5,15 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
+	"practice/config"
 	"practice/models"
 	"time"
 
 	"github.com/golang-jwt/jwt/v5"
 )
 
-var jwtSecretKey = []byte("super-secret-secret-key-12345")
-
 // POST /login
-func LoginHandler(db *sql.DB) http.HandlerFunc {
+func LoginHandler(db *sql.DB, cfg *config.Config) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		var req models.LoginRequest
 		if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
@@ -35,7 +34,7 @@ func LoginHandler(db *sql.DB) http.HandlerFunc {
 		}
 
 		// Generate secure JWT token
-		token, err := GenerateJWT(u)
+		token, err := GenerateJWT(u, cfg.JWTSecret)
 		if err != nil {
 			respondWithError(w, http.StatusInternalServerError, "Token creation failed")
 			return
@@ -56,7 +55,7 @@ func LoginHandler(db *sql.DB) http.HandlerFunc {
 }
 
 // GenerateJWT creates a signed token string containing the user's ID and Email
-func GenerateJWT(user *models.User) (string, error) {
+func GenerateJWT(user *models.User, jwtSecret []byte) (string, error) {
 	// Set token to expire in 1 hour
 	expirationTime := time.Now().Add(60 * time.Minute)
 
@@ -73,7 +72,7 @@ func GenerateJWT(user *models.User) (string, error) {
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
 
 	// Create complete signed JWT string using secret key
-	tokenString, err := token.SignedString(jwtSecretKey)
+	tokenString, err := token.SignedString(jwtSecret)
 	if err != nil {
 		return "", fmt.Errorf("failed to sign token: %w", err)
 	}

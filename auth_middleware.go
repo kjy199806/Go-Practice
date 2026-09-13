@@ -6,6 +6,7 @@ import (
 	"net/http"
 	"strings"
 
+	"practice/config"
 	"practice/models"
 
 	"github.com/golang-jwt/jwt/v5"
@@ -15,7 +16,7 @@ type contextKey string
 
 const UserIDKey contextKey = "userID"
 
-func RequireAuth(next http.HandlerFunc) http.HandlerFunc {
+func RequireAuth(next http.HandlerFunc, cfg *config.Config) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		var tokenString string
 
@@ -43,7 +44,7 @@ func RequireAuth(next http.HandlerFunc) http.HandlerFunc {
 			if _, ok := t.Method.(*jwt.SigningMethodHMAC); !ok {
 				return nil, fmt.Errorf("unexpected signing method: %v", t.Header["alg"])
 			}
-			return jwtSecretKey, nil
+			return cfg.JWTSecret, nil
 		})
 
 		if err != nil || !token.Valid {

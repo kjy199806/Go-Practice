@@ -3,10 +3,11 @@ package main
 import (
 	"log"
 	"net/http"
+	"practice/config"
 )
 
 func main() {
-	// 1. Initialize SQLite database (creates table & seeds users.json if empty)
+	// Initialize SQLite database (creates table & seeds users.json if empty)
 	db, err := InitDB("users.db")
 	if err != nil {
 		log.Fatalf("Failed to initialize database: %v", err)
@@ -15,21 +16,24 @@ func main() {
 
 	// printData(db)
 
-	// 2. Set up HTTP Router
+	// Load configuration (JWT secret, port, etc.)
+	cfg := config.LoadConfig()
+
+	// Set up HTTP Router
 	mux := http.NewServeMux()
 
 	// Public Auth Route
-	mux.HandleFunc("POST /login", LoginHandler(db))
+	mux.HandleFunc("POST /login", LoginHandler(db, cfg))
 
 	// Register Routes
-	mux.HandleFunc("GET /users", RequireAuth(GetUsersHandler(db)))
-	mux.HandleFunc("GET /users/{id}", RequireAuth(GetUserByIDHandler(db)))
+	mux.HandleFunc("GET /users", RequireAuth(GetUsersHandler(db), cfg))
+	mux.HandleFunc("GET /users/{id}", RequireAuth(GetUserByIDHandler(db), cfg))
 
 	mux.HandleFunc("POST /logout", LogoutHandler)
 
 	// 3. Start Server
-	log.Println("Server is running on http://localhost:8080")
-	if err := http.ListenAndServe(":8080", mux); err != nil {
+	log.Println("Server is running on http://localhost:" + cfg.Port)
+	if err := http.ListenAndServe(":"+cfg.Port, mux); err != nil {
 		log.Fatalf("Server failed to start: %v", err)
 	}
 }
